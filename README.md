@@ -1,7 +1,11 @@
-# L1X Typescript SDK
+# L1X Wallet SDK
 
+An SDK for interacting with accounts and contracts on the L1X network.
 
-Utilize this tool to engage with accounts and programs on the L1X Network via the L1X Network JSON RPC API.
+# Description
+
+The L1X Wallet SDK provides developers with tools to interact with the L1X blockchain using the JSON RPC API. From creating wallets to managing transactions and executing programmatic interactions, this SDK is a must-have for building wallet-based or dApp-integrated solutions.
+
 ## Installation
 
 For use in Node.js or a web application (Invited Members)
