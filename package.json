@@ -18,8 +18,8 @@
     "generate-docs": "typedoc src/index.ts --plugin typedoc-plugin-missing-exports",
     "build": "rm -rf dist && npm run build-web && npm run build-node && ./publish/run.sh"
   },
-  "author": "",
-  "license": "Apache License 2.0",
+  "author": "L1XFoundation",
+  "license": "Polyform-Perimeter-1.0.0",
   "dependencies": {
     "@aws-crypto/sha256-js": "^5.0.0",
     "@balancer-labs/sdk": "^1.1.5",
