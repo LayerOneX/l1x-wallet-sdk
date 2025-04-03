@@ -14,7 +14,7 @@ For use in Node.js or a web application
     
 ## Documentation and examples
 
-For more detail on individual functions, see the latest [API Documentation](https://github.com/L1X-Foundation/l1x-wallet-sdk/blob/master/docs/index.html)
+For more detail on individual functions, see the latest [API Documentation](https://github.com/LayerOneX/l1x-wallet-sdk/blob/master/docs/index.html)
 
 ## Environment Setup
 
@@ -43,7 +43,7 @@ To run tests, run the following command
 ## Usage/Examples
 
 
-[More Details on L1XProvider](https://dev9378.d3j4qg1i3nb5w3.amplifyapp.com/classes/L1XProvider.html)
+[More Details on L1XProvider](https://github.com/LayerOneX/l1x-wallet-sdk/blob/master/docs/classes/L1XProvider.html)
 ```javascript
 
 
