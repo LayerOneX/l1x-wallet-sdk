@@ -7,7 +7,7 @@ import { VMDeployArg, VMGetTransactionEventsArgs, VMInitArg, VMReadOnlyCallArg, 
 import { hexToStr, strToHex, hexToPlainByteArray, uint8ArrayToPlainByteArray, remove0xPrefix } from "../utils/general.ts";
 import { SignedTransactionPayload, StateChangingFunctionCallResponse, TransactionResponse, VMDeployResponse, VMInitResponse } from "../types/method_response.ts";
 import { ProviderAttrib, TxSmartContractDeploymentV2, TxSmartContractFunctionCallV2, TxSmartContractInitV2 } from "../types/general.ts";
-
+import { convertExponentialToString } from "../utils/number.ts";
 
 import * as ethers from "ethers";
 // import { Sha256 } from "@aws-crypto/sha256-js";
@@ -121,12 +121,18 @@ class L1XVMService {
    */
   
   async getSignedPayloadForStateChangingFunctionCall(attrib: VMStateChangeCallArg) : Promise<SignedTransactionPayload>{
+    
+    attrib.attrib.deposit = attrib.attrib.deposit || 0;
+
     const tx: TxSmartContractFunctionCallV2 = {
       contract_instance_address: attrib.attrib.contract_address,
       function_name: attrib.attrib.function,
       arguments: attrib.attrib.arguments,
-      deposit: Number(attrib.attrib.deposit) || 0,
+      deposit: convertExponentialToString(attrib.attrib.deposit),
     };
+
+
+    // console.log(tx,"tx");
 
     // Derive Wallet
     let walletService = new L1XWalletService();
@@ -188,11 +194,14 @@ class L1XVMService {
           function: hexToPlainByteArray(attrib.attrib.function),
           arguments: hexToPlainByteArray(attrib.attrib.arguments),
           // value: 0
-          deposit: tx.deposit.toString()
+          deposit: tx.deposit
         },
       },
       fee_limit: _txFeeLimit.toString(),
     };
+
+    // console.log(txPayloadForSignature,"txPayloadForSignature");
+    
 
     const signpayloadstring = await walletService.signPayload(txPayloadForSignature, wallet.private_key);
 
@@ -211,7 +220,7 @@ class L1XVMService {
           function_name: txPayloadForSignature["transaction_type"]["SmartContractFunctionCall"]["function"],
           arguments: txPayloadForSignature["transaction_type"]["SmartContractFunctionCall"]["arguments"],
           // value:txPayloadForSignature["transaction_type"]["SmartContractFunctionCall"]["value"]
-          deposit: tx.deposit.toString()
+          deposit: txPayloadForSignature["transaction_type"]["SmartContractFunctionCall"]["deposit"]
         },
       },
       fee_limit: _txFeeLimit.toString(),
@@ -284,7 +293,7 @@ class L1XVMService {
         SmartContractInit: {
           contract_code_address: hexToPlainByteArray(remove0xPrefix(attrib.attrib.base_contract_address)),
           arguments: hexToPlainByteArray(strToHex(convertToJSONString(initParams))),
-          deposit: (attrib.attrib.deposit || 0).toString()
+          deposit: convertExponentialToString(attrib.attrib.deposit || 0)
         },
       },
       fee_limit: _txFeeLimit.toString(),
@@ -304,7 +313,7 @@ class L1XVMService {
           SmartContractInit: {
             contract_code_address: txPayloadForSignature["transaction_type"]["SmartContractInit"].contract_code_address,
             arguments: txPayloadForSignature["transaction_type"]["SmartContractInit"].arguments,
-            deposit: txPayloadForSignature.transaction_type.SmartContractInit.deposit.toString()
+            deposit: txPayloadForSignature.transaction_type.SmartContractInit.deposit
           },
         },
         fee_limit: txPayloadForSignature["fee_limit"].toString(),
@@ -383,7 +392,7 @@ class L1XVMService {
           contract_type: 0,
           contract_code: uint8ArrayToPlainByteArray(_contractCode),
           // value: 0,
-          deposit: tx.deposit.toString(),
+          deposit: convertExponentialToString(tx.deposit),
           salt: hexToPlainByteArray(strToHex(salt))
         }
       },
@@ -415,7 +424,7 @@ class L1XVMService {
       wallet.public_key_bytes
     );
 
-    txPayloadForRequest.transaction_type.SmartContractDeployment.deposit = txPayloadForRequest.transaction_type.SmartContractDeployment.deposit.toString();
+    // txPayloadForRequest.transaction_type.SmartContractDeployment.deposit = txPayloadForRequest.transaction_type.SmartContractDeployment.deposit.toString();
     txPayloadForRequest.nonce = txPayloadForRequest.nonce.toString();
     txPayloadForRequest.fee_limit = txPayloadForRequest.fee_limit.toString();
 

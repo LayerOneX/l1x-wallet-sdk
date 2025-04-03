@@ -91,7 +91,7 @@ export interface TxSmartContractFunctionCallV2 {
   contract_instance_address: string;
   function_name: string;
   arguments: any;
-  deposit: number;
+  deposit: string;
 }
 
 export interface TxCreateStakingPool {

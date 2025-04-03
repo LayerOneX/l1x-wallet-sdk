@@ -1,20 +1,9 @@
-# L1X Wallet SDK
+# Beta Release
+# L1X Typescript SDK
 
-An SDK for interacting with accounts and contracts on the L1X network.
 
-# Description
-
-The L1X Wallet SDK provides developers with tools to interact with the L1X blockchain using the JSON RPC API. From creating wallets to managing transactions and executing programmatic interactions, this SDK is a must-have for building wallet-based or dApp-integrated solutions.
-
+Utilize this tool to engage with accounts and programs on the L1X Network via the L1X Network JSON RPC API.
 ## Installation
-
-For use in Node.js or a web application (Invited Members)
-
-- Login via CLI using invited credentials
-
-```bash
-npm login
-```
 
 
 For use in Node.js or a web application
@@ -31,7 +20,7 @@ For more detail on individual functions, see the latest [API Documentation](http
 
 Requirements:
 
-- Node Version >= v16.19.1
+- Node Version >= v16.19.1 And <= 18
 
 
 To Build from source run
@@ -62,22 +51,7 @@ const {L1XProvider} = require("@l1x/l1x-wallet-sdk")
 
 OR 
 
-For V1 Chain:
-
-import {L1XProvider} from ("@l1x/l1x-wallet-sdk")
-
-function getL1XProvider(){
-    return new L1XProvider({
-        clusterType:"mainnet"
-    })
-}
-
-(async() => {
-    const l1x = getL1XProvider();
-    await l1x.core.getChainState().then(console.log)
-})();
-
-For V2 Chain:
+For Mainnet:
 
 import {L1XProvider} from ("@l1x/l1x-wallet-sdk")
 

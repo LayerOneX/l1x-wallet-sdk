@@ -203,7 +203,7 @@ class L1XCoreStubService extends L1XTxService {
     else if (transactionType["SmartContractFunctionCall"]) {
       transactionType["SmartContractFunctionCall"]["contract_address"] =
         this.#transformValue(
-          transactionType["SmartContractFunctionCall"]["contract_address"],
+          transactionType["SmartContractFunctionCall"]["contract_instance_address"],
           ValueTransformOption.BYTES_TO_HEX
         );
       transactionType["SmartContractFunctionCall"]["function_name"] =
@@ -270,6 +270,8 @@ class L1XCoreStubService extends L1XTxService {
    * @private
    */
   #transformTransactionEntity(data: any): GetTransactionReceiptResponse {
+
+    // console.log("RAW Data > ",JSON.stringify(data));
     /* 
        {
          transaction: { tx_type: 1, transaction: [Object] },
@@ -421,7 +423,7 @@ class L1XCoreStubService extends L1XTxService {
   async getTransactionReceipt(
     attrib: GetTransactionReceiptArg
   ): Promise<GetTransactionReceiptResponse> {
-    let response = await this.#client.request("getTransactionReceipt", {
+    let response = await this.#client.request("getTransactionV3Receipt", {
       request: {
         hash: remove0xPrefix(attrib.hash),
       },
@@ -452,7 +454,7 @@ class L1XCoreStubService extends L1XTxService {
     });
 
     return response.events_data.map((event: any) => {
-      return this.#transformValue(event, ValueTransformOption.BYTES_TO_HEX);
+      return this.#transformValue(event, ValueTransformOption.BYTES_TO_JSON);
     });
   }
 
